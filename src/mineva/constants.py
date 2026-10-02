@@ -52,10 +52,10 @@ FEATURE_COLUMNS = {
 }
 
 MODEL_ARTIFACTS = {
-    "dollar": MODELS_DIR / "dollar_model.joblib",
-    "glucose": MODELS_DIR / "glucose_model.joblib",
-    "energy": MODELS_DIR / "energy_model.joblib",
+    "dollar": MODELS_DIR / "dollar_model.pkl",
+    "glucose": MODELS_DIR / "glucose_model.pkl",
+    "energy": MODELS_DIR / "energy_model.pkl",
 }
 
-RANDOM_STATE = 42
-TEST_SIZE = 0.2
+RANDOM_STATE = 7
+TEST_SIZE = 0.25

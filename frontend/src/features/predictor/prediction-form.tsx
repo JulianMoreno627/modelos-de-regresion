@@ -46,34 +46,50 @@ export function PredictionForm({
           "lg:mx-auto lg:flex lg:w-full lg:max-w-md lg:min-h-0 lg:flex-1 lg:flex-col lg:justify-between lg:gap-8",
         )}
       >
-          {spec.fields.map((field) => (
-            <Field
-              key={`${spec.id}-${field.name}`}
-              idPrefix={spec.id}
-              field={field}
-              raw={draft[field.name] ?? ""}
-              check={checks[field.name] ?? {}}
-              showError={showErrors}
-              onChange={(value) => onChange(field.name, value)}
-            />
-          ))}
+        {spec.fields.map((field) => (
+          <Field
+            key={`${spec.id}-${field.name}`}
+            idPrefix={spec.id}
+            field={field}
+            raw={draft[field.name] ?? ""}
+            check={checks[field.name] ?? {}}
+            showError={showErrors}
+            onChange={(value) => onChange(field.name, value)}
+          />
+        ))}
       </div>
 
-      <div className="mt-5 flex shrink-0 gap-3 border-t border-outline/60 pt-5 lg:mt-0 lg:pt-6">
+      <div className="mt-6 flex shrink-0 gap-3 border-t border-outline/60 pt-5 lg:mt-0 lg:pt-6">
         <button
           type="submit"
           disabled={pending}
-          className="inline-flex h-12 flex-1 touch-manipulation items-center justify-center gap-2 rounded-md bg-tertiary px-6 font-semibold text-on-tertiary transition-colors hover:bg-tertiary-container disabled:cursor-wait disabled:opacity-80"
+          className="relative inline-flex h-13 flex-1 touch-manipulation items-center justify-center gap-2 overflow-hidden rounded-[var(--radius-md)] px-6 font-bold text-white transition-all disabled:cursor-wait disabled:opacity-80"
+          style={{
+            background:
+              "linear-gradient(135deg, #6c5cff 0%, #8b5cf6 45%, #22d3ee 100%)",
+            boxShadow:
+              "0 10px 40px -10px rgba(108,92,255,0.7), inset 0 1px 0 0 rgba(255,255,255,0.22)",
+          }}
         >
-          {pending && <Spinner />}
-          {pending ? "Calculando…" : "Calcular"}
+          <span
+            aria-hidden
+            className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 hover:opacity-100"
+            style={{
+              background:
+                "linear-gradient(135deg, rgb(255 255 255 / 0.14), transparent 40%, rgb(34 211 238 / 0.24))",
+            }}
+          />
+          {pending && <Spinner tone="light" />}
+          <span className="relative">
+            {pending ? "Calculando…" : "Calcular predicción"}
+          </span>
         </button>
         <button
           type="button"
           onClick={onReset}
-          className="h-12 touch-manipulation rounded-md border border-outline px-4 text-sm font-medium text-secondary transition-colors hover:border-secondary hover:text-primary"
+          className="h-13 touch-manipulation rounded-[var(--radius-md)] border border-outline bg-surface/70 px-4 text-sm font-semibold text-secondary transition-colors hover:border-outline-strong hover:text-primary"
         >
-          Restablecer
+          Limpiar
         </button>
       </div>
     </form>
@@ -95,14 +111,20 @@ function Field({ idPrefix, field, raw, check, showError, onChange }: FieldProps)
   const [low, high] = field.training;
 
   const control = cn(
-    "type-num h-11 w-full rounded-md border bg-surface px-3 text-primary transition-colors outline-none lg:h-12 lg:px-4 lg:text-lg",
-    "focus:border-tertiary focus:ring-3 focus:ring-tertiary/20",
-    error ? "border-error" : "border-outline hover:border-secondary",
+    "type-num h-12 w-full rounded-[var(--radius-md)] border bg-surface/80 px-4 text-primary transition-all outline-none lg:h-13 lg:px-4.5 lg:text-lg",
+    "focus:border-transparent focus:bg-surface",
+    "focus:ring-[3px] focus:ring-tertiary/50",
+    error
+      ? "border-error/70 focus:ring-error/40"
+      : "border-outline hover:border-outline-strong",
   );
 
   return (
     <div className="min-w-0 lg:flex lg:flex-col lg:justify-center">
-      <label htmlFor={id} className="mb-1.5 block text-sm font-medium lg:mb-2 lg:text-base">
+      <label
+        htmlFor={id}
+        className="mb-2 block text-sm font-semibold tracking-tight text-primary lg:mb-2.5 lg:text-[0.95rem]"
+      >
         {field.label}
       </label>
 
@@ -111,7 +133,10 @@ function Field({ idPrefix, field, raw, check, showError, onChange }: FieldProps)
           id={id}
           value={raw}
           onChange={(event) => onChange(event.target.value)}
-          className={cn(control, "appearance-none bg-size-[1rem] bg-position-[right_0.75rem_center] bg-no-repeat pr-9")}
+          className={cn(
+            control,
+            "appearance-none bg-size-[1rem] bg-position-[right_0.9rem_center] bg-no-repeat pr-10 text-[15px]",
+          )}
           style={{ backgroundImage: CHEVRON }}
         >
           {field.options?.map((option) => (
@@ -121,7 +146,16 @@ function Field({ idPrefix, field, raw, check, showError, onChange }: FieldProps)
           ))}
         </select>
       ) : (
-        <div className="relative">
+        <div className="relative group">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -inset-[1px] rounded-[calc(var(--radius-md)+1px)] opacity-0 transition-opacity duration-300 group-focus-within:opacity-100"
+            style={{
+              background:
+                "linear-gradient(135deg, rgb(108 92 255 / 0.8), rgb(34 211 238 / 0.8))",
+              filter: "blur(6px)",
+            }}
+          />
           <input
             id={id}
             type="text"
@@ -133,10 +167,10 @@ function Field({ idPrefix, field, raw, check, showError, onChange }: FieldProps)
             onChange={(event) => onChange(event.target.value)}
             aria-invalid={Boolean(error)}
             aria-describedby={`${id}-hint`}
-            className={cn(control, field.unit && "pr-16")}
+            className={cn(control, "relative", field.unit && "pr-20")}
           />
           {field.unit && (
-            <span className="type-label pointer-events-none absolute inset-y-0 right-3 flex items-center text-secondary normal-case">
+            <span className="type-label pointer-events-none absolute inset-y-0 right-4 flex items-center text-accent font-bold normal-case tracking-tight">
               {field.unit}
             </span>
           )}
@@ -145,21 +179,21 @@ function Field({ idPrefix, field, raw, check, showError, onChange }: FieldProps)
 
       <p
         id={`${id}-hint`}
-        className="type-small mt-2 leading-relaxed text-pretty text-secondary lg:mt-2.5 lg:text-sm"
+        className="type-small mt-2.5 leading-relaxed text-pretty text-secondary lg:mt-3 lg:text-[13px]"
         aria-live="polite"
       >
         {error ? (
-          <span className="font-medium text-error">{error}</span>
+          <span className="font-bold text-error">{error}</span>
         ) : check.warning ? (
-          <span className="flex gap-2 rounded-sm bg-mark/15 px-2 py-1 text-primary">
-            <span aria-hidden className="mt-1.5 size-1.5 shrink-0 rounded-full bg-mark" />
+          <span className="flex gap-2 rounded-[var(--radius-sm)] bg-warn/10 border border-warn/25 px-2.5 py-1.5 text-warn">
+            <span aria-hidden className="mt-1.5 size-1.5 shrink-0 rounded-full bg-warn" />
             {check.warning}
           </span>
         ) : (
           <>
             {field.hint}{" "}
-            <span className="whitespace-nowrap">
-              Entrenado con {formatInput(low)}–{formatInput(high)}.
+            <span className="whitespace-nowrap text-[12px] text-secondary/80 font-mono">
+              [{formatInput(low)} – {formatInput(high)}]
             </span>
           </>
         )}
@@ -168,4 +202,4 @@ function Field({ idPrefix, field, raw, check, showError, onChange }: FieldProps)
   );
 }
 
-const CHEVRON = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%236b6358' stroke-width='1.5'%3E%3Cpath d='m4 6 4 4 4-4'/%3E%3C/svg%3E")`;
+const CHEVRON = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%2322d3ee' stroke-width='2'%3E%3Cpath d='m4 6 4 4 4-4'/%3E%3C/svg%3E")`;

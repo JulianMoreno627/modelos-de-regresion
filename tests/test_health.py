@@ -2,7 +2,7 @@ def test_health_returns_ok_when_models_loaded(client):
     response = client.get("/v1/health")
     assert response.status_code == 200
     body = response.json()
-    assert body["app"] == "AREPA"
+    assert body["app"] == "MINEVA"
     assert body["status"] == "ok"
     assert set(body["models_loaded"]) == {"dollar", "energy", "glucose"}
     assert body["database"] == "ok"
@@ -38,4 +38,4 @@ def test_cors_rejects_public_origins(client):
 def test_root(client):
     response = client.get("/")
     assert response.status_code == 200
-    assert response.json()["name"] == "AREPA"
+    assert response.json()["name"] == "MINEVA"

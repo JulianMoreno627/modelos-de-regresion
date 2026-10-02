@@ -1,12 +1,11 @@
-"""Load and cache serialized joblib artifacts at startup."""
+"""Load and cache serialized pickle artifacts at startup."""
 
 from __future__ import annotations
 
 import logging
+import pickle
 from pathlib import Path
 from typing import Any
-
-import joblib
 
 from backend.app.config import settings
 
@@ -23,11 +22,12 @@ class ModelRegistry:
     def load_all(self) -> None:
         missing: list[str] = []
         for name in MODEL_NAMES:
-            path = self._models_dir / f"{name}_model.joblib"
+            path = self._models_dir / f"{name}_model.pkl"
             if not path.is_file():
                 missing.append(str(path))
                 continue
-            self._artifacts[name] = joblib.load(path)
+            with open(path, "rb") as f:
+                self._artifacts[name] = pickle.load(f)
             logger.info("Loaded model artifact: %s", path)
 
         if missing:

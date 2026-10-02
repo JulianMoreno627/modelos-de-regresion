@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Train all three linear models and export joblib artifacts + metrics JSON."""
+"""Train all three linear models and export pickle artifacts + metrics JSON."""
 
 from __future__ import annotations
 
@@ -10,11 +10,11 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT / "src"))
 
-from arepa.constants import FEATURE_COLUMNS, FIGURES_DIR, MODELS_DIR, TARGET_COLUMNS
-from arepa.data_pipeline import check_multicollinearity, prepare_scenario_frame
-from arepa.modeling import export_model, train_scenario
-from arepa.treatment import save_processed
-from arepa.visualization import plot_correlation_heatmap, save_all_feature_plots
+from mineva.constants import FEATURE_COLUMNS, FIGURES_DIR, MODELS_DIR, TARGET_COLUMNS
+from mineva.data_pipeline import check_multicollinearity, prepare_scenario_frame
+from mineva.modeling import export_model, train_scenario
+from mineva.treatment import save_processed
+from mineva.visualization import plot_correlation_heatmap, save_all_feature_plots
 
 
 def main() -> None:
@@ -87,6 +87,7 @@ def _treatment_markdown(summary: dict[str, object]) -> str:
         "El IQR marca colas para revisarlas. No autoriza a sacarlas del ajuste.",
         "El modelo publicado es la regresión lineal con todas las filas válidas.",
         "La distancia de Cook dice qué filas sí mueven la recta. Huber es la comprobación robusta: baja el peso de la cola sin borrarla.",
+        "Métricas adicionales reportadas: MAE (error absoluto medio) y MAPE (error porcentual absoluto medio).",
         "",
     ]
     for scenario, payload in summary.items():
@@ -106,13 +107,13 @@ def _treatment_markdown(summary: dict[str, object]) -> str:
         huber = payload["huber_metrics"]
         influence = payload["influence"]
         lines.append(
-            f"- Modelo publicado (todas las filas válidas): R²={published['r2']:.4f}, MSE={published['mse']:.2f}, RMSE={published['rmse']:.2f}"
+            f"- Modelo publicado (todas las filas válidas): R²={published['r2']:.4f}, MSE={published['mse']:.2f}, RMSE={published['rmse']:.2f}, MAE={published['mae']:.2f}, MAPE={published['mape']:.4f}"
         )
         lines.append(
-            f"- Sensibilidad sin filas marcadas por IQR: R²={sensitivity['r2']:.4f}, MSE={sensitivity['mse']:.2f}, RMSE={sensitivity['rmse']:.2f}"
+            f"- Sensibilidad sin filas marcadas por IQR: R²={sensitivity['r2']:.4f}, MSE={sensitivity['mse']:.2f}, RMSE={sensitivity['rmse']:.2f}, MAE={sensitivity['mae']:.2f}, MAPE={sensitivity['mape']:.4f}"
         )
         lines.append(
-            f"- Huber (mismo split, pesos menores en la cola): R²={huber['r2']:.4f}, MSE={huber['mse']:.2f}, RMSE={huber['rmse']:.2f}"
+            f"- Huber (mismo split, pesos menores en la cola): R²={huber['r2']:.4f}, MSE={huber['mse']:.2f}, RMSE={huber['rmse']:.2f}, MAE={huber['mae']:.2f}, MAPE={huber['mape']:.4f}"
         )
         lines.append(
             f"- Cook's distance > {influence['cooks_threshold']:.4f} en entrenamiento: "

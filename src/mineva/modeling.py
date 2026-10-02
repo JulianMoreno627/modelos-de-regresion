@@ -2,19 +2,19 @@
 
 from __future__ import annotations
 
+import pickle
 from typing import Any
 
-import joblib
 import numpy as np
 import pandas as pd
 import statsmodels.api as sm
 from sklearn.linear_model import HuberRegressor, LinearRegression
-from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.metrics import mean_absolute_error, mean_absolute_percentage_error, mean_squared_error, r2_score
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
-from arepa.constants import (
+from mineva.constants import (
     FEATURE_COLUMNS,
     MODEL_ARTIFACTS,
     RANDOM_STATE,
@@ -52,9 +52,13 @@ def evaluate_model(
 ) -> dict[str, float]:
     preds = model.predict(x_test)
     mse = float(mean_squared_error(y_test, preds))
+    mae = float(mean_absolute_error(y_test, preds))
+    mape = float(mean_absolute_percentage_error(y_test, preds))
     return {
         "mse": mse,
         "rmse": float(np.sqrt(mse)),
+        "mae": mae,
+        "mape": mape,
         "r2": float(r2_score(y_test, preds)),
     }
 
@@ -98,11 +102,13 @@ def export_model(artifact: dict[str, Any], path: str | None = None, scenario: st
         if scenario is None:
             raise ValueError("Provide path or scenario")
         path = str(MODEL_ARTIFACTS[scenario])
-    joblib.dump(artifact, path)
+    with open(path, "wb") as f:
+        pickle.dump(artifact, f, protocol=pickle.HIGHEST_PROTOCOL)
 
 
 def load_model(path: str) -> dict[str, Any]:
-    return joblib.load(path)
+    with open(path, "rb") as f:
+        return pickle.load(f)
 
 
 def train_scenario(
@@ -121,7 +127,12 @@ def train_scenario(
     metrics = evaluate_model(pipeline, x_test, y_test)
     coef_df = get_coefficients(pipeline, features)
     ols = fit_ols_inference(x_train, y_train)
-    huber = Pipeline([("scaler", StandardScaler()), ("regressor", HuberRegressor())])
+    huber = Pipeline(
+        [
+            ("scaler", StandardScaler()),
+            ("regressor", HuberRegressor(epsilon=1.5, alpha=0.001, max_iter=200)),
+        ]
+    )
     huber.fit(x_train, y_train)
 
     return {

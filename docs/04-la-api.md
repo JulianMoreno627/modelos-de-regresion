@@ -1,6 +1,6 @@
 # La API
 
-El entrenamiento ocurre una vez, en la máquina de quien prepara los modelos. Cuando alguien pide una predicción, la API no vuelve a entrenar. Abre el `.joblib` y aplica la misma recta.
+El entrenamiento ocurre una vez, en la máquina de quien prepara los modelos. Cuando alguien pide una predicción, la API no vuelve a entrenar. Abre el `.pkl` y aplica la misma recta.
 
 Eso es lo que se espera en un servicio: el modelo es un artefacto. Cambiar los datos y reentrenar es otro paso, no una petición HTTP.
 
@@ -12,8 +12,8 @@ Eso es lo que se espera en un servicio: el modelo es un artefacto. Cambiar los d
 
 ```bash
 source .venv/bin/activate
-pip install -r requirements-dev.txt   # incluye `pip install -e .` para el paquete arepa
-# Opcional: export AREPA_DATABASE_URL=postgresql+psycopg://...
+pip install -r requirements-dev.txt   # incluye `pip install -e .` para el paquete mineva
+# Opcional: export MINEVA_DATABASE_URL=postgresql+psycopg://...
 alembic upgrade head   # solo si hay Postgres
 uvicorn backend.app.main:app --reload --port 8000
 ```
@@ -22,7 +22,7 @@ uvicorn backend.app.main:app --reload --port 8000
 - Contrato OpenAPI (JSON): http://localhost:8000/openapi.json  
 - Raíz: http://localhost:8000/ (enlaces útiles)
 
-Variables de entorno usan el prefijo **`AREPA_`** (por ejemplo `AREPA_DATABASE_URL`). Plantilla: `.env.example`.
+Variables de entorno usan el prefijo **`MINEVA_`** (por ejemplo `MINEVA_DATABASE_URL`). Plantilla: `.env.example`.
 
 ## Rutas
 
@@ -33,13 +33,13 @@ Variables de entorno usan el prefijo **`AREPA_`** (por ejemplo `AREPA_DATABASE_U
 | POST | `/v1/predict/glucose` | Predice glucosa | No |
 | POST | `/v1/predict/energy` | Predice consumo (kWh) | No |
 | GET | `/v1/models` | Catálogo de los 3 ejercicios (MSE/R²; ver nota abajo) | No |
-| GET | `/v1/models/{nombre}/metadata` | Coeficientes e interpretación (desde `.joblib`) | No |
+| GET | `/v1/models/{nombre}/metadata` | Coeficientes e interpretación (desde `.pkl`) | No |
 | GET | `/v1/predictions/history` | Últimas predicciones guardadas | Sí |
 | GET | `/v1/analytics/summary` | Conteos y promedios por modelo | Sí |
 
 `{nombre}` es `dollar`, `glucose` o `energy`.
 
-En **`GET /v1/models`**, si Postgres está configurado, MSE/R²/RMSE del listado vienen de `model_metadata` (sincronizada al arrancar); si no hay base, del artefacto `.joblib` cargado en memoria.
+En **`GET /v1/models`**, si Postgres está configurado, MSE/R²/RMSE del listado vienen de `model_metadata` (sincronizada al arrancar); si no hay base, del artefacto `.pkl` cargado en memoria.
 
 ## Códigos de respuesta
 
@@ -48,7 +48,7 @@ En **`GET /v1/models`**, si Postgres está configurado, MSE/R²/RMSE del listado
 | **200** | Petición correcta |
 | **422** | JSON inválido o fuera de rango (por ejemplo edad 0, hora 25) |
 | **404** | Modelo desconocido en metadata o history |
-| **503** | Modelo no cargado (falta `.joblib`) **o** ruta de historial/analytics sin base configurada |
+| **503** | Modelo no cargado (falta `.pkl`) **o** ruta de historial/analytics sin base configurada |
 
 Las predicciones **no** devuelven 503 por fallo de base: el número se calcula igual; ver `stored_in_history` abajo.
 
@@ -86,13 +86,13 @@ Detalle de los tres estados de `database` (`disabled`, `ok`, `error`): [Glosario
 
 ## CORS (frontend)
 
-La app en `frontend/` (Next.js) llama a la API desde el navegador. Por defecto se aceptan `http://localhost:3000`, `http://127.0.0.1:3000` y, con regex, otros puertos en **localhost y redes privadas** (útil en WSL o probando desde el móvil en la misma Wi‑Fi). Lista fija adicional: `AREPA_CORS_ORIGINS` (JSON en `.env`).
+La app en `frontend/` (Next.js) llama a la API desde el navegador. Por defecto se aceptan `http://localhost:3000`, `http://127.0.0.1:3000` y, con regex, otros puertos en **localhost y redes privadas** (útil en WSL o probando desde el móvil en la misma Wi‑Fi). Lista fija adicional: `MINEVA_CORS_ORIGINS` (JSON en `.env`).
 
 ## Qué hace el backend por dentro
 
 - Validar rangos en el cuerpo JSON (Pydantic).
 - Armar la fila con los mismos nombres de columnas del entrenamiento.
-- En energía, convertir la hora con `encode_hour` (`src/arepa/features.py`) antes de predecir.
+- En energía, convertir la hora con `encode_hour` (`src/mineva/features.py`) antes de predecir.
 - Opcionalmente insertar en Postgres y exponer historial/analytics.
 
 No hay endpoint de entrenamiento, colas ni Huber en producción (solo OLS lineal).

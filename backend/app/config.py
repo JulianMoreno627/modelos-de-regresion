@@ -9,14 +9,14 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",
-        env_prefix="AREPA_",
+        env_prefix="MINEVA_",
         extra="ignore",
     )
 
-    app_name: str = "AREPA API"
+    app_name: str = "MINEVA API"
     app_description: str = (
-        "Applied Regression, Estimation & Predictive Analytics — "
-        "multi-domain linear regression inference"
+        "Minería de Datos y Evaluación de Variables para Regresión Aplicada — "
+        "inferencia de regresión lineal en múltiples dominios"
     )
     api_v1_prefix: str = "/v1"
     models_dir: Path = Path(__file__).resolve().parents[2] / "models"

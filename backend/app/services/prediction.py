@@ -6,7 +6,7 @@ from typing import Any
 
 import pandas as pd
 
-from arepa.features import encode_hour
+from mineva.features import encode_hour
 from backend.app.schemas import (
     DollarPredictionRequest,
     EnergyPredictionRequest,
@@ -34,6 +34,8 @@ def _predict(model_name: str, features: dict[str, float | int]) -> PredictionRes
         model_r2=float(metrics["r2"]),
         model_mse=float(metrics["mse"]),
         model_rmse=float(metrics["rmse"]) if "rmse" in metrics else None,
+        model_mae=float(metrics["mae"]) if "mae" in metrics else None,
+        model_mape=float(metrics["mape"]) if "mape" in metrics else None,
     )
 
 

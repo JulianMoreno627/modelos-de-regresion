@@ -52,8 +52,8 @@ async def validation_exception_handler(_request: Request, exc: RequestValidation
 @app.get("/")
 def root():
     return {
-        "name": "AREPA",
-        "full_name": "Applied Regression, Estimation & Predictive Analytics",
+        "name": "MINEVA",
+        "full_name": "Minería de Datos y Evaluación de Variables para Regresión Aplicada",
         "docs": "/docs",
         "health": f"{settings.api_v1_prefix}/health",
     }

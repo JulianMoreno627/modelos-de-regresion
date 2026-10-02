@@ -2,7 +2,7 @@
 
 ## Glosario
 
-| Término | Significado en AREPA |
+| Término | Significado en MINEVA |
 |---|---|
 | **CSV** | Archivo de tabla en texto (filas y columnas). Los datos “sucios” están en `data/raw/*.csv`. |
 | **CRISP-DM** | Metodología de proyectos de datos (negocio → datos → modelado → evaluación → despliegue). Este repo sigue ese hilo: datos en `data/`, modelos en `models/`, servicio en `backend/`. |
@@ -12,7 +12,7 @@
 | **StandardScaler** | Resta la media y divide por la desviación estándar de cada columna, usando las estadísticas del entrenamiento. |
 | **OLS / MCO** | *Ordinary Least Squares* / *mínimos cuadrados ordinarios*: elige coeficientes minimizando la suma de residuos al cuadrado. Es lo que hace `LinearRegression` en sklearn. |
 | **Residuo** | Diferencia `y − ŷ` en una fila; el cuadrado de los residuos es lo que OLS minimiza. |
-| **Intercepto (β₀)** | Término constante de la recta; en AREPA conviene leerlo junto con coeficientes en unidades originales vía metadata. |
+| **Intercepto (β₀)** | Término constante de la recta; en MINEVA conviene leerlo junto con coeficientes en unidades originales vía metadata. |
 | **R²** | Entre 0 y 1 (puede ser negativo en modelos malos). Qué fracción de la variación explica la recta en datos de prueba. Fórmula e intuición en [Regresión lineal](03-regresion-lineal.md). |
 | **MSE / RMSE** | Error cuadrático medio y su raíz. Mientras más bajo, mejor (RMSE en las mismas unidades que el target). |
 | **Hold-out / train-test** | Parte de las filas entrena; otra parte solo evalúa, para no medir el error en las mismas filas usadas para ajustar. |
@@ -28,7 +28,7 @@ Para **usar** la API basta [00-empezar-aqui](00-empezar-aqui.md). Para **entende
 
 ### ¿Tengo que entrenar antes de predecir?
 
-No para probar el proyecto. Los archivos en `models/` ya están listos. Entrenar de nuevo solo hace falta si cambias `data/` o el código en `src/arepa/`:
+No para probar el proyecto. Los archivos en `models/` ya están listos. Entrenar de nuevo solo hace falta si cambias `data/` o el código en `src/mineva/`:
 
 ```bash
 python scripts/train_models.py
@@ -40,7 +40,7 @@ No. Solo carga el `.joblib` y multiplica suma (recta). Reentrenar es offline.
 
 ### ¿Puedo usar la API sin PostgreSQL?
 
-Sí. Sin `AREPA_DATABASE_URL` (o sin base accesible):
+Sí. Sin `MINEVA_DATABASE_URL` (o sin base accesible):
 
 - **POST /v1/predict/** sigue respondiendo 200.
 - La respuesta incluye `"stored_in_history": false`.
@@ -57,7 +57,7 @@ Ejemplo:
   "status": "ok",
   "models_loaded": ["dollar", "glucose", "energy"],
   "database": "ok",
-  "app": "AREPA"
+  "app": "MINEVA"
 }
 ```
 
@@ -97,7 +97,7 @@ Los tests usan SQLite en memoria para la base; no necesitas Postgres instalado.
 ### Algo falló en Docker
 
 1. ¿Puerto 8000 ocupado? Cambia el mapeo en `docker-compose.yml` o para el otro proceso.
-2. ¿Ya tienes Postgres en 5432? No levantes el servicio `db` de AREPA; usa `docker compose up api --build --no-deps` y la URL con `host.docker.internal` (ver [05-postgres-y-docker.md](05-postgres-y-docker.md)).
+2. ¿Ya tienes Postgres en 5432? No levantes el servicio `db` de MINEVA; usa `docker compose up api --build --no-deps` y la URL con `host.docker.internal` (ver [05-postgres-y-docker.md](05-postgres-y-docker.md)).
 3. Revisa logs del contenedor `api`: migraciones Alembic y carga de modelos aparecen al inicio.
 
-Volver al índice: [Aprender AREPA](README.md).
+Volver al índice: [Aprender MINEVA](README.md).

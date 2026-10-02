@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-if [ -n "$AREPA_DATABASE_URL" ]; then
+if [ -n "$MINEVA_DATABASE_URL" ]; then
   alembic upgrade head
 fi
 

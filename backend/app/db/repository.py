@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import logging
-from datetime import UTC, datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 from sqlalchemy import func, select
 
@@ -104,7 +104,7 @@ def analytics_summary() -> dict:
     if not db_session.enabled or db_session.SessionLocal is None:
         return empty
 
-    cutoff = datetime.now(UTC).replace(tzinfo=None) - timedelta(days=7)
+    cutoff = datetime.now(timezone.utc).replace(tzinfo=None) - timedelta(days=7)
     with db_session.SessionLocal() as session:
         total = session.scalar(select(func.count()).select_from(PredictionLog)) or 0
         counts = session.execute(

@@ -1,6 +1,6 @@
 # Empezar aquí
 
-Este texto es para alguien que **no ha usado el repo** y quiere ver AREPA funcionar antes de leer el detalle técnico.
+Este texto es para alguien que **no ha usado el repo** y quiere ver MINEVA funcionar antes de leer el detalle técnico.
 
 ## Qué vas a obtener
 
@@ -18,7 +18,7 @@ Con Docker no instalas Postgres ni Python: Compose levanta la base y la API junt
 ## Primera predicción en cinco minutos (Docker)
 
 1. Clona o descarga el repositorio y entra en la carpeta del proyecto.
-2. Copia la plantilla de variables: `cp .env.example .env` (la contraseña de ejemplo es `arepa_dev`).
+2. Copia la plantilla de variables: `cp .env.example .env` (la contraseña de ejemplo es `mineva_dev`).
 3. Ejecuta: `docker compose up --build` y espera a que aparezca que Uvicorn está en el puerto 8000.
 4. Abre en el navegador: **http://localhost:8000/docs**
 5. Expande **POST /v1/predict/dollar** → **Try it out** → deja el JSON de ejemplo o usa:
@@ -52,7 +52,7 @@ source .venv/bin/activate          # Windows: .venv\Scripts\activate
 pip install -r requirements-dev.txt
 
 cp .env.example .env
-# Opcional: AREPA_DATABASE_URL=postgresql+psycopg://postgres:arepa_dev@localhost:5432/arepa
+# Opcional: MINEVA_DATABASE_URL=postgresql+psycopg://postgres:mineva_dev@localhost:5432/mineva
 # Si no tienes Postgres, puedes omitir la URL: las predicciones funcionan; el historial no.
 
 alembic upgrade head               # solo si configuraste Postgres
@@ -65,7 +65,7 @@ Docs: http://localhost:8000/docs
 
 | Orden | Archivo | Para qué sirve |
 |---|---|---|
-| 1 | [Qué es AREPA](01-que-es-arepa.md) | Idea del proyecto y carpetas |
+| 1 | [Qué es MINEVA](01-que-es-mineva.md) | Idea del proyecto y carpetas |
 | 2 | [Limpieza de datos](02-limpieza-de-datos.md) | Qué se hizo con los CSV |
 | 3 | [Regresión lineal](03-regresion-lineal.md) | Cómo se entrenó y qué significan R², MSE |
 | 4 | [La API](04-la-api.md) | Rutas, errores, respuestas |
@@ -77,7 +77,7 @@ Si solo quieres **usar** la API, basta con este archivo y [La API](04-la-api.md)
 ## Palabras que verás seguido
 
 - **API**: programa que escucha peticiones HTTP y devuelve JSON (aquí, predicciones).
-- **`.joblib`**: archivo donde scikit-learn guarda el modelo ya entrenado.
+- **`.pkl`**: archivo con pickle donde scikit-learn guarda el modelo ya entrenado.
 - **Predicción**: un número que sale de aplicar la recta aprendida a los datos que tú envías.
 - **PostgreSQL**: base de datos donde se guarda el *historial* de predicciones, no los CSV de entrenamiento.
 

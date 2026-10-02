@@ -37,6 +37,8 @@ class PredictionResponse(BaseModel):
     model_r2: float
     model_mse: float
     model_rmse: float | None = None
+    model_mae: float | None = None
+    model_mape: float | None = None
     stored_in_history: bool = Field(
         False,
         description="True when the row was saved to predictions_log (requires a working database).",
@@ -52,9 +54,11 @@ class ModelCatalogItem(BaseModel):
     r2_score: float
     mse: float
     rmse: float | None = None
+    mae: float | None = None
+    mape: float | None = None
     version: str = "v1"
     trained_at: datetime | None = None
-    artifact_loaded: bool = Field(description="True when the .joblib is loaded in this process.")
+    artifact_loaded: bool = Field(description="True when the .pkl is loaded in this process.")
 
 
 class ModelMetadataResponse(BaseModel):

@@ -1,20 +1,20 @@
 ---
 version: alpha
 name: Plano
-description: Identidad visual de AREPA — un plano cartesiano donde se lee la recta ajustada.
+description: Identidad visual de MINEVA — un plano cartesiano donde se lee la recta ajustada.
 colors:
-  primary: "#1B2A27"
-  on-primary: "#F4F3EC"
-  secondary: "#5A6762"
-  tertiary: "#16615B"
+  primary: "#2D1E2F"
+  on-primary: "#F4F0F7"
+  secondary: "#6B5B73"
+  tertiary: "#2E5EAA"
   on-tertiary: "#FFFFFF"
-  tertiary-container: "#0F4B46"
-  neutral: "#F4F3EC"
-  surface: "#FFFFFB"
-  outline: "#DEDDD1"
-  mark: "#E9A21B"
+  tertiary-container: "#1F4A8A"
+  neutral: "#F4F0F7"
+  surface: "#FFFCF9"
+  outline: "#E8E3EC"
+  mark: "#E07A5F"
   positive: "#52701B"
-  mora: "#A8395A"
+  mora: "#8134AF"
   error: "#B42318"
 typography:
   display:
@@ -152,7 +152,7 @@ components:
 
 ## Overview
 
-**Un plano donde se lee la recta.** AREPA ajusta tres regresiones lineales; la interfaz
+**Un plano donde se lee la recta.** MINEVA ajusta tres regresiones lineales; la interfaz
 debe verse como esa figura: papel milimetrado, ejes en tinta, una sola recta y el punto
 que se está estimando. Números exactos, jerarquía clara, cero decoración.
 
@@ -165,36 +165,37 @@ pantallas grandes. La densidad es alta pero respirada: agrupar, no apilar.
 
 ## Colors
 
-**Aguacate y maíz.** Una paleta de mercado —hoja de plátano, maíz, mora— pasada por
-papel de algodón. Ni beige-y-terracota ni azul-y-violeta: nada que se lea como plantilla.
+**Atardecer y púrpura.** Una paleta de atardecer urbano —azul crepúsculo, terracota, mora—
+sobre papel de algodón. Ni el clásico azul-corporativo ni el marrón-beige: nada que
+se lea como plantilla.
 
-**Cómo armonizan.** Tres acentos sobre neutros que tiran levemente al verde:
+**Cómo armonizan.** Tres acentos sobre neutros que tiran levemente al púrpura:
 
-1. **Papel e tinta:** fondo, superficie, retícula y tinta comparten un matiz verde
-   grisáceo y solo cambian de luminosidad. Por eso el verde petróleo "pertenece" al
-   papel y el ámbar de la arepa resalta sin chocar.
-2. **Petróleo (acción):** el único color que invita a hacer algo. En las figuras son
-   los puntos observados.
-3. **Maíz (marca):** el ámbar de la mascota. Marca lo importante y es la recta en las
-   figuras. Casi opuesto al petróleo, así que los dos se equilibran.
-4. **Oliva y mora (signo):** el coeficiente que sube y el que baja. Oliva vive cerca del
-   maíz y mora cerca del sonrojo de la mascota; ninguno es petróleo, así que un dato
-   nunca se confunde con un botón.
+1. **Papel e tinta:** fondo, superficie, retícula y tinta comparten un matiz púrpura
+   grisáceo y solo cambian de luminosidad. Por eso el azul crepúsculo "pertenece" al
+   papel y el terracota resalta sin chocar.
+2. **Azul crepúsculo (acción):** el único color que invita a hacer algo. En las figuras
+   son los puntos observados.
+3. **Terracota (marca):** el acento cálido de la mascota. Marca lo importante y es la
+   recta en las figuras. Casi opuesto al azul, así que los dos se equilibran.
+4. **Oliva y mora (signo):** el coeficiente que sube y el que baja. Oliva vive cerca
+   del terracota y mora cerca del púrpura; ninguno es azul, así que un dato nunca se
+   confunde con un botón.
 
 **Tintes, no tokens nuevos.** Los fondos suaves salen del mismo token con opacidad
 (`bg-mark/15`, `ring-tertiary/20`, `bg-positive/10`). Así cualquier tinte hereda la
 armonía y la paleta no crece. Las figuras de `report/figures/` usan los mismos valores
-(`src/arepa/visualization.py`).
+(`src/mineva/visualization.py`).
 
-- **Primary (#1B2A27) — Tinta:** títulos, texto, contorno de la mascota y el pie de página.
-- **Secondary (#5A6762) — Eje:** leyendas, metadatos, ayudas de campo. Pasa AA sobre neutral y surface.
-- **Tertiary (#16615B) — Petróleo:** botón Calcular, ejercicio activo, foco y enlaces. Hover en **#0F4B46**.
-- **Neutral (#F4F3EC) — Papel:** fondo de página.
-- **Surface (#FFFFFB):** tarjetas, campos y fondo de las figuras.
-- **Outline (#DEDDD1):** bordes, divisores, retícula y skeletons. Nunca para texto.
-- **Mark (#E9A21B) — Maíz:** la mascota, la variable de mayor impacto y los avisos. Solo como fondo o trazo; jamás como texto sobre fondos claros.
+- **Primary (#2D1E2F) — Tinta:** títulos, texto, contorno de la mascota y el pie de página.
+- **Secondary (#6B5B73) — Eje:** leyendas, metadatos, ayudas de campo. Pasa AA sobre neutral y surface.
+- **Tertiary (#2E5EAA) — Azul crepúsculo:** botón Calcular, ejercicio activo, foco y enlaces. Hover en **#1F4A8A**.
+- **Neutral (#F4F0F7) — Papel:** fondo de página.
+- **Surface (#FFFCF9):** tarjetas, campos y fondo de las figuras.
+- **Outline (#E8E3EC):** bordes, divisores, retícula y skeletons. Nunca para texto.
+- **Mark (#E07A5F) — Terracota:** la mascota, la variable de mayor impacto y los avisos. Solo como fondo o trazo; jamás como texto sobre fondos claros.
 - **Positive (#52701B) — Oliva:** coeficientes que suben la predicción y el estado "en línea".
-- **Mora (#A8395A):** coeficientes que bajan la predicción y el sonrojo de la mascota.
+- **Mora (#8134AF):** coeficientes que bajan la predicción y el acento púrpura.
 - **Error (#B42318):** validación y fallos de red. Solo como texto o borde, siempre acompañado de un mensaje; nunca como relleno de un área grande.
 
 ## Typography

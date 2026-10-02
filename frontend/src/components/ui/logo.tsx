@@ -1,39 +1,81 @@
+import type {} from "react";
+
 import { cn } from "@/lib/cn";
 
-/** Arepa mascot. Blinks on its own and tilts when its parent `group` is hovered. */
+/** Logotipo MINEVA: cubo hexagonal geométrico con gradiente violeta → cian (muy diferente del original) */
 export function Logo({ className }: { className?: string }) {
   return (
     <svg
-      viewBox="0 0 48 48"
+      viewBox="0 0 56 56"
       aria-hidden
       className={cn(
-        "size-7 transition-transform duration-300 ease-out motion-safe:group-hover:-rotate-8",
+        "size-7 transition-transform duration-500 ease-out motion-safe:group-hover:-rotate-6 motion-safe:group-hover:scale-105",
         className,
       )}
     >
-      <ellipse cx="24" cy="25" rx="20" ry="18.5" fill="var(--color-mark)" stroke="var(--color-primary)" strokeWidth="1.75" />
-      <ellipse cx="17" cy="13.5" rx="7" ry="2.6" transform="rotate(-18 17 13.5)" fill="var(--color-surface)" opacity="0.4" />
+      <defs>
+        <linearGradient id="mineva-body" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#6c5cff" />
+          <stop offset="50%" stopColor="#8b5cf6" />
+          <stop offset="100%" stopColor="#22d3ee" />
+        </linearGradient>
+        <linearGradient id="mineva-glow" x1="0.5" y1="0" x2="0.5" y2="1">
+          <stop offset="0%" stopColor="rgb(108 92 255 / 0.9)" />
+          <stop offset="100%" stopColor="rgb(34 211 238 / 0.9)" />
+        </linearGradient>
+      </defs>
 
-      <g fill="var(--color-primary)" opacity="0.16">
-        <circle cx="34" cy="13.5" r="1.1" />
-        <circle cx="38.5" cy="21" r="0.9" />
-        <circle cx="9.5" cy="21.5" r="0.9" />
-        <circle cx="30" cy="38.5" r="1.2" />
-        <circle cx="16" cy="38" r="0.9" />
+      {/* Halo exterior */}
+      <circle cx="28" cy="28" r="25" fill="url(#mineva-body)" opacity="0.16" />
+      <circle
+        cx="28"
+        cy="28"
+        r="20.5"
+        fill="none"
+        stroke="url(#mineva-glow)"
+        strokeWidth="1.2"
+        opacity="0.5"
+      />
+
+      {/* Cuerpo principal: hexágono moderno */}
+      <path
+        d="M28 8.5 L45.5 18.5 V38.5 L28 48.5 L10.5 38.5 V18.5 Z"
+        fill="url(#mineva-body)"
+        stroke="rgb(255 255 255 / 0.1)"
+        strokeWidth="1.2"
+      />
+
+      {/* Vértice superior / arista frontal */}
+      <path
+        d="M28 8.5 V48.5 M10.5 18.5 L45.5 38.5 M45.5 18.5 L10.5 38.5"
+        stroke="rgb(255 255 255 / 0.18)"
+        strokeWidth="1"
+        strokeLinecap="round"
+      />
+
+      {/* Ecuación ŷ al centro */}
+      <text
+        x="50%"
+        y="55%"
+        textAnchor="middle"
+        dominantBaseline="middle"
+        fill="#ffffff"
+        style={{
+          fontFamily: "var(--font-jetbrains-mono), monospace",
+          fontSize: "22px",
+          fontWeight: 700,
+          letterSpacing: "-0.03em",
+        }}
+      >
+        ŷ
+      </text>
+
+      {/* Micro puntos orbitales flotantes */}
+      <g fill="url(#mineva-body)" opacity="0.9">
+        <circle cx="47" cy="14" r="1.7" />
+        <circle cx="9" cy="42" r="1.7" />
+        <circle cx="45" cy="42" r="1.2" />
       </g>
-
-      <g className="origin-center transform-fill motion-safe:animate-blink">
-        <ellipse cx="17" cy="23" rx="2.4" ry="2.9" fill="var(--color-primary)" />
-        <ellipse cx="31" cy="23" rx="2.4" ry="2.9" fill="var(--color-primary)" />
-        <circle cx="17.9" cy="21.9" r="0.85" fill="var(--color-surface)" />
-        <circle cx="31.9" cy="21.9" r="0.85" fill="var(--color-surface)" />
-      </g>
-
-      <ellipse cx="11.5" cy="29" rx="3.4" ry="2.1" fill="var(--color-mora)" opacity="0.35" />
-      <ellipse cx="36.5" cy="29" rx="3.4" ry="2.1" fill="var(--color-mora)" opacity="0.35" />
-
-      <path d="M19 28.6Q24 35.4 29 28.6Z" fill="var(--color-primary)" stroke="var(--color-primary)" strokeWidth="1.5" strokeLinejoin="round" />
-      <ellipse cx="24" cy="32" rx="2.3" ry="1.3" fill="var(--color-mora)" opacity="0.9" />
     </svg>
   );
 }

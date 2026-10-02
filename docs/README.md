@@ -1,4 +1,4 @@
-# Aprender AREPA
+# Aprender MINEVA
 
 Guías en español para quien **parte de cero** o solo quiere usar la API.
 
@@ -7,7 +7,7 @@ Guías en español para quien **parte de cero** o solo quiere usar la API.
 | # | Tema |
 |---|---|
 | 0 | [Empezar aquí](00-empezar-aqui.md) |
-| 1 | [Qué es AREPA](01-que-es-arepa.md) |
+| 1 | [Qué es MINEVA](01-que-es-mineva.md) |
 | 2 | [Limpieza de datos](02-limpieza-de-datos.md) |
 | 3 | [La regresión lineal](03-regresion-lineal.md) — OLS, métricas, por qué cada modelo |
 | 4 | [La API](04-la-api.md) |

@@ -21,7 +21,7 @@ En la industria se separan dos casos:
 - **Error de captura.** El instrumento o la persona escribió algo que no puede existir. Se corrige o se saca.
 - **Evento real extremo.** Un día de mucha inflación, una glucosa alta, un pico de temperatura. Se queda, porque es parte de lo que el modelo va a ver cuando esté en uso.
 
-AREPA hace eso. Las colas se etiquetan (`normal`, `rare_legitimate`, `real_extreme`) y el modelo publicado se entrena con todas las filas válidas.
+MINEVA hace eso. Las colas se etiquetan (`normal`, `rare_legitimate`, `real_extreme`) y el modelo publicado se entrena con todas las filas válidas.
 
 ## Cómo se comprueba que no tumban la recta
 

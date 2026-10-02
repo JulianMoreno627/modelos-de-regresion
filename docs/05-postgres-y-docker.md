@@ -15,7 +15,7 @@ La conexión es síncrona (SQLAlchemy). El volumen de este proyecto no justifica
 
 | Situación | `/v1/predict/*` | `stored_in_history` | `/v1/predictions/history` | `/v1/health` |
 |---|---|---|---|---|
-| Sin `AREPA_DATABASE_URL` | 200 | `false` | 503 | `database: disabled`, `status: ok` si modelos OK |
+| Sin `MINEVA_DATABASE_URL` | 200 | `false` | 503 | `database: disabled`, `status: ok` si modelos OK |
 | URL configurada y Postgres bien | 200 | `true` | 200 | `database: ok` |
 | URL configurada pero Postgres caído | 200 | `false` | 503 o error al consultar | `database: error`, `status: degraded` |
 
@@ -35,15 +35,15 @@ Compose levanta dos contenedores:
 | Servicio | Imagen | Puerto hacia tu PC |
 |---|---|---|
 | `db` | `postgres:17-alpine` | no se publica (solo red interna) |
-| `api` | `arepa-api:alpine` | **8000** → http://localhost:8000/docs |
+| `api` | `mineva-api:alpine` | **8000** → http://localhost:8000/docs |
 
-La base `arepa` y las tablas se crean solas (Alembic al arrancar la API). Los datos de Postgres quedan en el volumen `arepa_pg_data`.
+La base `mineva` y las tablas se crean solas (Alembic al arrancar la API). Los datos de Postgres quedan en el volumen `mineva_pg_data`.
 
-Contraseña por defecto en el ejemplo: `arepa_dev` (cámbiala en `.env` si quieres).
+Contraseña por defecto en el ejemplo: `mineva_dev` (cámbiala en `.env` si quieres).
 
 ### Interfaz web (fuera de Compose)
 
-El contenedor `api` incluye modelos `.joblib` y el código FastAPI; **no** incluye Node ni la UI. Para el entregable visual:
+El contenedor `api` incluye modelos `.pkl` y el código FastAPI; **no** incluye Node ni la UI. Para el entregable visual:
 
 1. Deja Compose corriendo (API en `:8000`).
 2. En el host: `cd frontend`, `cp .env.example .env.local`, `pnpm install`, `pnpm dev`.
@@ -53,12 +53,12 @@ Las gráficas de `report/figures/` las lee el servidor de desarrollo de Next, no
 
 ## Si ya tienes Postgres en el PC
 
-Por ejemplo el contenedor `postgres-db` en el puerto 5432. No levantes el servicio `db` de AREPA (evitas choque de puertos):
+Por ejemplo el contenedor `postgres-db` en el puerto 5432. No levantes el servicio `db` de MINEVA (evitas choque de puertos):
 
 ```bash
-# Crea la base una vez en tu Postgres:  CREATE DATABASE arepa;
+# Crea la base una vez en tu Postgres:  CREATE DATABASE mineva;
 cp .env.example .env
-# Edita .env: AREPA_DATABASE_URL=...@host.docker.internal:5432/arepa
+# Edita .env: MINEVA_DATABASE_URL=...@host.docker.internal:5432/mineva
 
 docker compose up api --build --no-deps
 ```

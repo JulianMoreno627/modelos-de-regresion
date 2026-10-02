@@ -1,4 +1,4 @@
-# AREPA — Web UI
+# MINEVA — Web UI
 
 Next.js app for the three regression exercises. The API must be running on port 8000 (see the repo [README](../README.md)).
 

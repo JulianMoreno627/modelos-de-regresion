@@ -2,7 +2,7 @@
   "dollar": {
     "treatment": {
       "scenario": "dollar",
-      "source": "data/raw/dolar_data.csv",
+      "source": "data\\raw\\dolar_data.csv",
       "rows_dirty": 500,
       "rows_clean": 500,
       "rows_removed": 0,
@@ -94,58 +94,64 @@
     "vif": [
       {
         "feature": "interest_rate",
-        "vif": 1.0118993898838875
-      },
-      {
-        "feature": "day",
-        "vif": 1.0065837892287528
+        "vif": 16.798897367125317
       },
       {
         "feature": "inflation_rate",
-        "vif": 1.006532239102017
+        "vif": 14.61549638230132
+      },
+      {
+        "feature": "day",
+        "vif": 4.017543757093144
       }
     ],
     "metrics_published": {
-      "mse": 2376.970876572467,
-      "rmse": 48.75418829775004,
-      "r2": 0.9963128117569109
+      "mse": 2216.070751225864,
+      "rmse": 47.07516066064846,
+      "mae": 36.28625581585228,
+      "mape": 0.007037043336486423,
+      "r2": 0.9957851616698746
     },
     "metrics_without_iqr_flags": {
-      "mse": 2560.4973137555576,
-      "rmse": 50.601356837100305,
-      "r2": 0.99593784087456
+      "mse": 2820.324705588283,
+      "rmse": 53.106729381390856,
+      "mae": 41.03872817393856,
+      "mape": 0.007959637502138494,
+      "r2": 0.995065584239008
     },
     "huber_metrics": {
-      "mse": 2451.2211092227503,
-      "rmse": 49.509808212340616,
-      "r2": 0.9961976338270621
+      "mse": 2198.417018401469,
+      "rmse": 46.88727992112006,
+      "mae": 36.13904145637635,
+      "mape": 0.007007320796442385,
+      "r2": 0.9958187380481275
     },
     "influence": {
-      "train_rows": 400,
-      "cooks_threshold": 0.01,
-      "high_influence_rows": 25,
-      "max_cooks_distance": 0.05017637904601797
+      "train_rows": 375,
+      "cooks_threshold": 0.010666666666666666,
+      "high_influence_rows": 20,
+      "max_cooks_distance": 0.04548189807328107
     },
     "coefficients": [
       {
         "feature": "day",
-        "coefficient": 4.984338715884639,
-        "standardized_coefficient": 699.8238181755279
+        "coefficient": 4.996619876870565,
+        "standardized_coefficient": 720.4680040203579
       },
       {
         "feature": "inflation_rate",
-        "coefficient": -870.7317083114131,
-        "standardized_coefficient": -4.267695392326026
+        "coefficient": -28.445714148916352,
+        "standardized_coefficient": -0.1391196104737138
       },
       {
         "feature": "interest_rate",
-        "coefficient": -1.377431287808411,
-        "standardized_coefficient": -0.6597987330640835
+        "coefficient": -5.881845034616968,
+        "standardized_coefficient": -2.844351548671118
       },
       {
         "feature": "intercept",
-        "coefficient": 3985.783290894245,
-        "standardized_coefficient": 5202.697603367559
+        "coefficient": 3990.6290547640465,
+        "standardized_coefficient": 5200.348414254538
       }
     ],
     "outlier_rows_kept": 10
@@ -153,7 +159,7 @@
   "glucose": {
     "treatment": {
       "scenario": "glucose",
-      "source": "data/raw/glucosa_data.csv",
+      "source": "data\\raw\\glucosa_data.csv",
       "rows_dirty": 2000,
       "rows_clean": 2000,
       "rows_removed": 0,
@@ -245,59 +251,65 @@
     },
     "vif": [
       {
+        "feature": "bmi",
+        "vif": 9.12069749741498
+      },
+      {
         "feature": "age",
-        "vif": 1.0005543509717238
+        "vif": 7.582413689929847
       },
       {
         "feature": "physical_activity_hours",
-        "vif": 1.000474034041482
-      },
-      {
-        "feature": "bmi",
-        "vif": 1.0004025698327106
+        "vif": 3.4125243724759557
       }
     ],
     "metrics_published": {
-      "mse": 233.6930004508584,
-      "rmse": 15.287020653183484,
-      "r2": 0.6813715865404839
+      "mse": 243.6942690406163,
+      "rmse": 15.610710074836964,
+      "mae": 12.299287367965427,
+      "mape": 0.09506554029582807,
+      "r2": 0.6849712261361917
     },
     "metrics_without_iqr_flags": {
-      "mse": 223.90432680758116,
-      "rmse": 14.96343298870888,
-      "r2": 0.6947511195808522
+      "mse": 238.33402025591258,
+      "rmse": 15.438070483577686,
+      "mae": 12.167295950322,
+      "mape": 0.09215200651290817,
+      "r2": 0.6555865264223565
     },
     "huber_metrics": {
-      "mse": 234.1151359994152,
-      "rmse": 15.300821415839582,
-      "r2": 0.6807960263831747
+      "mse": 243.1558783947453,
+      "rmse": 15.593456268407762,
+      "mae": 12.280315381687647,
+      "mape": 0.09489748468205676,
+      "r2": 0.6856672151953362
     },
     "influence": {
-      "train_rows": 1600,
-      "cooks_threshold": 0.0025,
-      "high_influence_rows": 90,
-      "max_cooks_distance": 0.012728643119486882
+      "train_rows": 1500,
+      "cooks_threshold": 0.0026666666666666666,
+      "high_influence_rows": 83,
+      "max_cooks_distance": 0.014159830617406438
     },
     "coefficients": [
       {
         "feature": "age",
-        "coefficient": 1.2265900344995717,
-        "standardized_coefficient": 21.570810524540356
+        "coefficient": 1.2327517104358972,
+        "standardized_coefficient": 21.48698795308844
       },
       {
         "feature": "bmi",
-        "coefficient": 0.9333730560351005,
-        "standardized_coefficient": 3.7225287924334873
+        "coefficient": 0.8257073102344887,
+        "standardized_coefficient": 3.2748126651097547
       },
       {
         "feature": "physical_activity_hours",
-        "coefficient": -2.085276343043284,
-        "standardized_coefficient": -6.106122125279992
+        "coefficient": -2.0898824540135186,
+        "standardized_coefficient": -6.131424337291383
       },
       {
         "feature": "intercept",
-        "coefficient": 65.86086530452529,
-        "standardized_coefficient": 139.81409842954685
+        "coefficient": 68.32793311636519,
+        "standardized_coefficient": 139.62255827153044
       }
     ],
     "outlier_rows_kept": 19
@@ -305,7 +317,7 @@
   "energy": {
     "treatment": {
       "scenario": "energy",
-      "source": "data/raw/energia_data.csv",
+      "source": "data\\raw\\energia_data.csv",
       "rows_dirty": 10000,
       "rows_clean": 10000,
       "rows_removed": 0,
@@ -397,67 +409,73 @@
     "vif": [
       {
         "feature": "temperature",
-        "vif": 1.0003067614266457
-      },
-      {
-        "feature": "hour_cos",
-        "vif": 1.0002260004560874
+        "vif": 4.308876906509407
       },
       {
         "feature": "day_of_week",
-        "vif": 1.0000470400412615
+        "vif": 4.308834269420171
+      },
+      {
+        "feature": "hour_cos",
+        "vif": 1.0000379989437314
       },
       {
         "feature": "hour_sin",
-        "vif": 1.000033881058335
+        "vif": 1.0000075569305702
       }
     ],
     "metrics_published": {
-      "mse": 894.4055061609894,
-      "rmse": 29.90661308408208,
-      "r2": 0.7851430644321611
+      "mse": 881.9182172268789,
+      "rmse": 29.697107893309727,
+      "mae": 23.459794744678323,
+      "mape": 0.06113186587518378,
+      "r2": 0.7838016363393944
     },
     "metrics_without_iqr_flags": {
-      "mse": 830.9903612394899,
-      "rmse": 28.826903427865606,
-      "r2": 0.7773485473982085
+      "mse": 869.5071981272685,
+      "rmse": 29.487407450083985,
+      "mae": 23.22635828283094,
+      "mape": 0.059426618206552394,
+      "r2": 0.7724551578744268
     },
     "huber_metrics": {
-      "mse": 894.5102858993544,
-      "rmse": 29.90836481487001,
-      "r2": 0.7851178939101332
+      "mse": 882.7953291675918,
+      "rmse": 29.711871855667255,
+      "mae": 23.44979399783676,
+      "mape": 0.06110634711022928,
+      "r2": 0.7835866162132362
     },
     "influence": {
-      "train_rows": 8000,
-      "cooks_threshold": 0.0005,
-      "high_influence_rows": 408,
-      "max_cooks_distance": 0.002960220571931898
+      "train_rows": 7500,
+      "cooks_threshold": 0.0005333333333333334,
+      "high_influence_rows": 398,
+      "max_cooks_distance": 0.0044710681254513576
     },
     "coefficients": [
       {
         "feature": "temperature",
-        "coefficient": 9.870098523050014,
-        "standardized_coefficient": 49.2494813480678
+        "coefficient": 9.869353993517478,
+        "standardized_coefficient": 49.48550188954031
       },
       {
         "feature": "hour_sin",
-        "coefficient": -38.3105997675908,
-        "standardized_coefficient": -26.994439592713505
+        "coefficient": -37.944160547180516,
+        "standardized_coefficient": -26.863801887616265
       },
       {
         "feature": "hour_cos",
-        "coefficient": -4.871820838566049,
-        "standardized_coefficient": -3.456963558554513
+        "coefficient": -4.319625893873653,
+        "standardized_coefficient": -3.0506391322369613
       },
       {
         "feature": "day_of_week",
-        "coefficient": -3.0666735506800054,
-        "standardized_coefficient": -6.145022889248078
+        "coefficient": -2.943266285766816,
+        "standardized_coefficient": -5.89525915352905
       },
       {
         "feature": "intercept",
-        "coefficient": 166.08339627947905,
-        "standardized_coefficient": 400.10857952736836
+        "coefficient": 166.02639889560567,
+        "standardized_coefficient": 400.6091426149468
       }
     ],
     "outlier_rows_kept": 133

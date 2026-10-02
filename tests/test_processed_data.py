@@ -4,8 +4,8 @@ from pathlib import Path
 
 import pandas as pd
 
-from arepa.constants import PROCESSED_DATA_PATHS
-from arepa.treatment import treat_data
+from mineva.constants import PROCESSED_DATA_PATHS
+from mineva.treatment import treat_data
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 

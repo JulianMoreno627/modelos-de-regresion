@@ -12,13 +12,13 @@ import pandas as pd
 import seaborn as sns
 from matplotlib.colors import LinearSegmentedColormap
 
-INK = "#1B2A27"
-AXIS = "#5A6762"
-GRID = "#DEDDD1"
-SURFACE = "#FFFFFB"
-POINT = "#16615B"
-LINE = "#C98A0B"
-MORA = "#A8395A"
+INK = "#2D1E2F"
+AXIS = "#6B5B73"
+GRID = "#E8E3EC"
+SURFACE = "#FFFCF9"
+POINT = "#2E5EAA"
+LINE = "#E07A5F"
+MORA = "#8134AF"
 
 LABELS = {
     "day": "Día",
@@ -35,7 +35,7 @@ LABELS = {
     "energy_consumption": "Consumo (kWh)",
 }
 
-CORRELATION_CMAP = LinearSegmentedColormap.from_list("arepa", [MORA, SURFACE, POINT])
+CORRELATION_CMAP = LinearSegmentedColormap.from_list("mineva", [MORA, SURFACE, POINT])
 
 
 def _label(column: str) -> str:

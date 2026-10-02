@@ -10,8 +10,8 @@ from typing import Any
 
 import pandas as pd
 
-from arepa.constants import COLUMN_MAPS, PROCESSED_DATA_PATHS, PROJECT_ROOT, RAW_DATA_PATHS
-from arepa.features import add_cyclic_hour
+from mineva.constants import COLUMN_MAPS, PROCESSED_DATA_PATHS, PROJECT_ROOT, RAW_DATA_PATHS
+from mineva.features import add_cyclic_hour
 
 # Values outside these bounds cannot occur for the measured quantity.
 HARD_BOUNDS: dict[str, dict[str, tuple[float, float]]] = {

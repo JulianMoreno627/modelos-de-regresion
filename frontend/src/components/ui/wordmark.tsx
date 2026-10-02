@@ -1,17 +1,33 @@
+import type {} from "react";
+
 import { cn } from "@/lib/cn";
 
-export function Wordmark({ inverted = false, compact = false }: { inverted?: boolean; compact?: boolean }) {
+export function Wordmark({
+  inverted = false,
+  compact = false,
+}: {
+  inverted?: boolean;
+  compact?: boolean;
+}) {
   return (
     <span className="min-w-0">
-      <span className="block font-display text-lg leading-none font-semibold tracking-tight">A.R.E.P.A.</span>
       <span
         className={cn(
-          "mt-1 block text-xs leading-snug text-pretty",
-          inverted ? "text-on-primary/70" : "text-secondary",
+          "block font-display text-xl leading-none font-bold tracking-tight",
+          !inverted && "gradient-text",
+          inverted && "text-white",
+        )}
+      >
+        MINEVA
+      </span>
+      <span
+        className={cn(
+          "mt-1 block text-[11px] leading-snug text-pretty font-medium",
+          inverted ? "text-white/60" : "text-secondary",
           compact && "hidden sm:block",
         )}
       >
-        Applied Regression, Estimation & Predictive Analytics
+        Minería · Inferencia · Evaluación · Visualización Aplicada
       </span>
     </span>
   );

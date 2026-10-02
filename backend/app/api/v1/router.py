@@ -32,7 +32,7 @@ def health_check() -> HealthResponse:
         status=status,
         models_loaded=loaded,
         database=database,
-        app="AREPA",
+        app="MINEVA",
     )
 
 
@@ -111,7 +111,7 @@ def _ensure_database() -> None:
     if not db_session.enabled:
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-            detail="Database is not configured. Set AREPA_DATABASE_URL.",
+            detail="Database is not configured. Set MINEVA_DATABASE_URL.",
         )
 
 

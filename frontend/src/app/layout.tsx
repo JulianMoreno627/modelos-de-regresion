@@ -1,37 +1,37 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
+import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 
 import "./globals.css";
 
-const fraunces = Fraunces({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  weight: ["600"],
-  variable: "--font-fraunces",
+  weight: ["500", "600", "700"],
+  variable: "--font-space-grotesk",
   display: "swap",
 });
 
-const plexSans = IBM_Plex_Sans({
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
-  variable: "--font-plex-sans",
-  display: "swap",
-});
-
-const plexMono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-plex-mono",
+  variable: "--font-jetbrains-mono",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "A.R.E.P.A.",
+  title: "MINEVA · Predictor científico",
   description:
-    "Applied Regression, Estimation & Predictive Analytics. Predice el precio del dólar, la glucosa y el consumo de energía con tres regresiones lineales.",
+    "Minería, Inferencia, Evaluación y Visualización Aplicada. Dashboard de predicción con modelos de regresión lineal: dólar, glucosa y consumo energético.",
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f4f3ec",
+  themeColor: "#0b0926",
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
@@ -39,7 +39,10 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="es" className={`${fraunces.variable} ${plexSans.variable} ${plexMono.variable}`}>
+    <html
+      lang="es"
+      className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable}`}
+    >
       <body>{children}</body>
     </html>
   );

@@ -1,19 +1,74 @@
 .venv/
+venv/
+env/
 __pycache__/
 *.py[cod]
 .ipynb_checkpoints/
+
+# Environment files - NUNCA subas archivos .env con secrets
 .env
+.env.*
+!.env.example
+!.env.*.example
+
+# Python
 .pytest_cache/
 .ruff_cache/
+.mypy_cache/
 htmlcov/
 .coverage
+.coverage.*
 *.egg-info/
 dist/
 build/
-.DS_Store
 
-# pnpm store (lockfiles live in frontend/)
+# Node.js / npm / yarn / pnpm
+node_modules/
+.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
 .pnpm-store/
 
-# Next.js local env (see frontend/.env.example)
+# Next.js
+frontend/.next/
+frontend/out/
 frontend/.env*.local
+
+# TypeScript
+*.tsbuildinfo
+
+# Testing
+coverage/
+.nyc_output/
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Vercel
+.vercel/
+
+# Docker volumes
+postgres_data/
+pgdata/
+
+# Models trained locally (si quieres mantenerlos descomenta la sig linea)
+# models/*.pkl
+# models/*.joblib

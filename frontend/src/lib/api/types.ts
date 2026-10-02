@@ -16,6 +16,8 @@ export interface CatalogItem {
   r2_score: number;
   mse: number;
   rmse: number | null;
+  mae: number | null;
+  mape: number | null;
   version: string;
   trained_at: string | null;
   artifact_loaded: boolean;
@@ -44,6 +46,8 @@ export interface Prediction {
   model_r2: number;
   model_mse: number;
   model_rmse: number | null;
+  model_mae: number | null;
+  model_mape: number | null;
   stored_in_history: boolean;
 }
 

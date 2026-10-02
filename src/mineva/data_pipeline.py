@@ -8,12 +8,12 @@ import numpy as np
 import pandas as pd
 from statsmodels.stats.outliers_influence import variance_inflation_factor
 
-from arepa.constants import TARGET_COLUMNS
+from mineva.constants import TARGET_COLUMNS
 
 
 def load_data(scenario: str) -> pd.DataFrame:
     """Load the dirty CSV from data/raw and rename columns."""
-    from arepa.treatment import load_dirty
+    from mineva.treatment import load_dirty
 
     return load_dirty(scenario)
 
@@ -96,7 +96,7 @@ def check_multicollinearity(df: pd.DataFrame, feature_cols: list[str]) -> pd.Dat
 
 def prepare_scenario_frame(scenario: str) -> tuple[pd.DataFrame, dict[str, Any]]:
     """Dirty file → treated frame. The report is the dirty-vs-clean record."""
-    from arepa.treatment import treat_data
+    from mineva.treatment import treat_data
 
     treated, report = treat_data(scenario)
     return treated, report

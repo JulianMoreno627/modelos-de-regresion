@@ -1,6 +1,6 @@
 """Operational tables. Training data stays in CSV; Postgres only stores what the API does."""
 
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 
 from sqlalchemy import JSON, DateTime, Float, String, func
 from sqlalchemy.dialects.postgresql import JSONB
@@ -19,7 +19,7 @@ class PredictionLog(Base):
     input_payload: Mapped[dict] = mapped_column(JSON().with_variant(JSONB(), "postgresql"))
     prediction: Mapped[float] = mapped_column(Float)
     created_at: Mapped[datetime] = mapped_column(
-        DateTime, server_default=func.now(), default=lambda: datetime.now(UTC).replace(tzinfo=None)
+        DateTime, server_default=func.now(), default=lambda: datetime.now(timezone.utc).replace(tzinfo=None)
     )
 
 
@@ -32,6 +32,6 @@ class ModelMetadata(Base):
     mse: Mapped[float] = mapped_column(Float)
     rmse: Mapped[float | None] = mapped_column(Float, nullable=True)
     trained_at: Mapped[datetime] = mapped_column(
-        DateTime, server_default=func.now(), default=lambda: datetime.now(UTC).replace(tzinfo=None)
+        DateTime, server_default=func.now(), default=lambda: datetime.now(timezone.utc).replace(tzinfo=None)
     )
     version: Mapped[str] = mapped_column(String(10), default="v1")

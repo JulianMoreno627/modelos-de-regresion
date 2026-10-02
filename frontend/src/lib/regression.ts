@@ -2,7 +2,7 @@ import type { ExerciseSpec } from "@/features/exercises/config";
 import type { ModelMetadata } from "@/lib/api/types";
 import { formatNumber } from "@/lib/format";
 
-/** Same cyclic encoding as src/arepa/features.py: hour 1 and hour 24 end up next to each other. */
+/** Same cyclic encoding as src/mineva/features.py: hour 1 and hour 24 end up next to each other. */
 export function encodeHour(hour: number): [number, number] {
   const angle = (2 * Math.PI * (hour - 1)) / 24;
   return [Math.sin(angle), Math.cos(angle)];

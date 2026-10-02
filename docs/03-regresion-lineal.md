@@ -16,7 +16,7 @@ Supón que tienes muchas filas históricas: entradas `x` (día, edad, temperatur
 - **`βⱼ`**: cuánto sube o baja **ŷ** si **`xⱼ` sube una unidad** y el resto de variables no cambia (en las unidades originales, después de desescalar; ver más abajo).  
 - **`ŷ`**: predicción (y con sombrero = estimación, no el valor real).
 
-En AREPA hay **tres rectas distintas** (dólar, glucosa, energía), cada una con sus columnas definidas en `src/arepa/constants.py`.
+En MINEVA hay **tres rectas distintas** (dólar, glucosa, energía), cada una con sus columnas definidas en `src/mineva/constants.py`.
 
 ## Por qué un modelo lineal en cada escenario
 
@@ -72,7 +72,7 @@ Cada columna se transforma con la media `μⱼ` y desviación estándar `σⱼ` 
 zⱼ = (xⱼ − μⱼ) / σⱼ
 ```
 
-La regresión se ajusta sobre `z`. Al predecir, la API aplica **el mismo** `μⱼ` y `σⱼ` guardados en el `.joblib`.
+La regresión se ajusta sobre `z`. Al predecir, la API aplica **el mismo** `μⱼ` y `σⱼ` guardados en el `.pkl`.
 
 **Por qué:** día (~100), inflación (~0.02) y tasa (~5) no están en la misma escala. Escalar no cambia la predicción si lo haces de forma consistente, pero hace comparables los coeficientes en espacio estandarizado y estabiliza el cálculo.
 
@@ -93,7 +93,7 @@ hour_sin = sin(2π · h / 24)
 hour_cos = cos(2π · h / 24)
 ```
 
-Así el modelo ve una **posición en un círculo**, no una línea infinita. Es una transformación fija **antes** de la parte lineal; la API usa la misma función `encode_hour` en `src/arepa/features.py` que el entrenamiento.
+Así el modelo ve una **posición en un círculo**, no una línea infinita. Es una transformación fija **antes** de la parte lineal; la API usa la misma función `encode_hour` en `src/mineva/features.py` que el entrenamiento.
 
 ## Cómo se entrena aquí (pasos del repo)
 
@@ -101,22 +101,22 @@ Así el modelo ve una **posición en un círculo**, no una línea infinita. Es u
 python scripts/train_models.py
 ```
 
-Código: `src/arepa/modeling.py`.
+Código: `src/mineva/modeling.py`.
 
-1. **Partición 80 % / 20 %** (`train_test_split`, `random_state=42`): el 20 % **no** se usa para calcular `β`; solo para medir error en datos “nuevos” simulados.
-2. **Pipeline**: `StandardScaler` + `LinearRegression` → ajuste OLS sobre el 80 %.
-3. **Evaluación** en el 20 % retenido: MSE, RMSE, R².
-4. **Guardado** del pipeline completo en `models/*.joblib`.
+1. **Partición 75 % / 25 %** (`train_test_split`, `random_state=7`): el 25 % **no** se usa para calcular `β`; solo para medir error en datos “nuevos” simulados.
+2. **Pipeline**: `StandardScaler` + `LinearRegression` → ajuste OLS sobre el 75 %.
+3. **Evaluación** en el 25 % retenido: MSE, RMSE, MAE, MAPE, R².
+4. **Guardado** del pipeline completo en `models/*.pkl` (serialización con pickle).
 
 El escalador va dentro del archivo. La API no recalcula medias: reaplica las del entrenamiento.
 
 ### Por qué separar train y test
 
-Si midieras el error en las mismas filas con las que ajustaste `β`, el número sería **optimista** (memorización parcial). El hold-out del 20 % es una comprobación simple de generalización. No es validación cruzada; para este tamaño de proyecto suele bastar.
+Si midieras el error en las mismas filas con las que ajustaste `β`, el número sería **optimista** (memorización parcial). El hold-out del 25 % es una comprobación simple de generalización. No es validación cruzada; para este tamaño de proyecto suele bastar.
 
-## Cómo leer MSE, RMSE y R²
+## Cómo leer MSE, RMSE, MAE, MAPE y R²
 
-En el conjunto de **prueba** (20 %):
+En el conjunto de **prueba** (25 %):
 
 **MSE** (error cuadrático medio):
 

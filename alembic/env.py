@@ -14,9 +14,9 @@ target_metadata = Base.metadata
 
 
 def _url() -> str:
-    url = os.environ.get("AREPA_DATABASE_URL")
+    url = os.environ.get("MINEVA_DATABASE_URL")
     if not url:
-        raise RuntimeError("Set AREPA_DATABASE_URL before running Alembic")
+        raise RuntimeError("Set MINEVA_DATABASE_URL before running Alembic")
     return url
 
 
